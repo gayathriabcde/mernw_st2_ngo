@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import connectDB from './db/dbConnect.js';
 
@@ -19,6 +20,7 @@ app.use(cors({
 const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
 app.use('/api/activity', activityRoutes);

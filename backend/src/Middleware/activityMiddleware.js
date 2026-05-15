@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const verifyRole = (req, res, next) => {
+export const verifyToken = (req, res, next) => {
      try {
           const token = req.cookies.jwt;
           console.log(token);

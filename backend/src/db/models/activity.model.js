@@ -30,8 +30,8 @@ const activitySchema = new Schema({
      }, 
      ngo: {
           type: Schema.Types.ObjectId,
-          ref = 'NGO'
+          ref: 'NGO'
      }
-}, { timeStamps: true });
+}, { timestamps: true });
 
 export const Activity = model('Activity', activitySchema);

@@ -1,9 +1,9 @@
 import './App.css'
-import {Demo} from './components/Navbar'
+import {Activity} from './pages/Activity';
 function App() {
   return (
     <>
-    <Demo />
+    <Activity />
     </>
   )
 }

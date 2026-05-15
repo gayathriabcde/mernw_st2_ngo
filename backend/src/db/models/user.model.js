@@ -16,7 +16,7 @@ const userSchema = new Schema({
     },
 
     ngoId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "NGO",
     },
 

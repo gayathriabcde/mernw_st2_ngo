@@ -1,4 +1,5 @@
 import {Schema, model} from 'mongoose';
+import {Schema, model} from 'mongoose';
 
 const activitySchema = new Schema({
      title: {
@@ -29,6 +30,8 @@ const activitySchema = new Schema({
           }
      }, 
      ngo: {
+          type: Schema.Types.ObjectId,
+          ref : 'NGO',
           type: Schema.Types.ObjectId,
           ref : 'NGO'
      }

@@ -79,3 +79,45 @@ export const createSubmission = async (req, res) => {
     });
   }
 };
+
+export const updateSubmission = async (req, res) => {
+    try{
+        const {id} = req.params;
+        const {data} = req.body;
+        const submission = await Submission.findByIdAndUpdate(id, { data }, { new: true });
+        if (!submission) {
+            return res.status(404).json({
+                message: "Submission not found"
+            });
+        }
+        res.status(200).json({
+            message: "Submission updated successfully",
+            data: submission
+        });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+}
+export const deleteSubmission = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const submission = await Submission.findByIdAndDelete(id);
+        if (!submission) {
+            return res.status(404).json({
+                message: "Submission not found"
+            });
+        }
+        res.status(200).json({
+            message: "Submission deleted successfully",
+            data: submission
+        });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+}

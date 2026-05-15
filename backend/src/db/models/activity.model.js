@@ -1,4 +1,4 @@
-import mongoose, {Schema, model} from 'mongoose';
+import {Schema, model} from 'mongoose';
 
 const activitySchema = new Schema({
      title: {
@@ -29,7 +29,7 @@ const activitySchema = new Schema({
           }
      }, 
      ngo: {
-          type: mongoose.Schema.Types.ObjectId,
+          type: Schema.Types.ObjectId,
           ref = 'NGO'
      }
 }, { timeStamps: true });

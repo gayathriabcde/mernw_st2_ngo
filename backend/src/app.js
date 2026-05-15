@@ -3,15 +3,24 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import connectDB from './db/dbConnect.js';
 
-import activityRoutes from './Routes/activityRoutes.js';
+import activityRoutes from './Routes/activityRouter.js';
+import authRouter from './Routes/authRouter.js';
 
 dotenv.config();
 connectDB();
+
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:3000'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 
+app.use("/api/auth", authRouter);
 app.use('/api/activity', activityRoutes);
 
 app.listen(process.env.PORT, () => {

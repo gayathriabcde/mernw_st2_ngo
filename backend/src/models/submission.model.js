@@ -13,7 +13,12 @@ const submissionSchema = new Schema({
   data: {
     type: String,
   },
+
+  ngoId:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "NGO",
+  }
   
 }, { timestamps: true });
 
-module.exports = mongoose.model("Submission", submissionSchema);
+export const Submission =  model('submission', submissionSchema);

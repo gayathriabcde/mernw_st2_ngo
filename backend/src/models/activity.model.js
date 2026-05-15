@@ -1,0 +1,37 @@
+import mongoose, {Schema, model} from 'mongoose';
+
+const activitySchema = new Schema({
+     title: {
+          type: String,
+          required: true
+     },
+     description: {
+          type: String,
+     },
+     activityType: {
+          type: String,
+     },
+     location: {
+          type: String,
+          required: true
+     },
+     beneficiary: {
+          name: {
+               type: String,
+               required: true
+          },
+          email: {
+               type: String,
+          },
+          phone: {
+               type: String,
+               required: true
+          }
+     }, 
+     ngo: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref = 'NGO'
+     }
+}, { timeStamps: true });
+
+export const Activity = model('Activity', activitySchema);

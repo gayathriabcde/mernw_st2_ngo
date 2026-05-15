@@ -8,15 +8,16 @@ export const verifyRole = (req, res, next) => {
           const token = req.cookies.jwt;
           console.log(token);
 
-          if (!token) res.status(401).json({message: "Unauthorized, missing token"});
+          if (!token) return res.status(401).json({message: "Unauthorized, missing token"});
 
           const user = jwt.verify(token, process.env.JWT_SECRET); 
           console.log(user);
 
           req.user = user;
 
-          next;
+          next();
      } catch (error) {
           console.error(error.message);
+          res.status(401).json({message: "Invalid or expired token"});
      }
 }

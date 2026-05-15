@@ -10,7 +10,7 @@ export const getAllActivities = async (req, res) => {
                const responseActivities = await Activity.find({});
 
                if (!responseActivities || responseActivities.length === 0) return res.status(404).json({message: "Not Found"});
-               res.status(200).json({
+               return res.status(200).json({
                     message: "Activities retrieved succesfully",
                     data: responseActivities
                })
@@ -19,7 +19,7 @@ export const getAllActivities = async (req, res) => {
           }
      } catch (error) {
           console.error(error.message);
-          res.status(500).json({
+          return res.status(500).json({
                message: "Server error"
           })
      }

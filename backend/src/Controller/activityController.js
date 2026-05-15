@@ -15,7 +15,8 @@ export const getAllActivities = async (req, res) => {
                     data: responseActivities
                })
           } else {
-               res.status(403).json({ message: "Forbidden" });
+               //res.status(403).json({ message: "Forbidden" });
+               const responseActivities = await Activity.find({assignedWorkers: req.user.id});
           }
      } catch (error) {
           console.error(error.message);
@@ -58,14 +59,16 @@ export const updateActivityFields = async (req, res) => { //title, description, 
 
           if (role === 'admin') {
                const { id } = req.params;
-               const { title, description, location, activityType } = req.body; 
+               const { title, description, location, activityType, newWorkerId } = req.body; 
 
-               const fieldsToUpdate = {};
+               const fieldsToUpdate = {$set: {}};
 
-               if (title != null) fieldsToUpdate.title = title;
-               if (description != null) fieldsToUpdate.description = description;
-               if (location != null) fieldsToUpdate.location = location;
-               if (activityType != null) fieldsToUpdate.activityType = activityType;
+               if (title != null) fieldsToUpdate.$set.title = title;
+               if (description != null) fieldsToUpdate.$set.description = description;
+               if (location != null) fieldsToUpdate.$set.location = location;
+               if (activityType != null) fieldsToUpdate.$set.activityType = activityType;
+
+               if (newWorkerId != null) fieldsToUpdate.$addToSet = { assignedWorkers: newWorkerId };
 
                const updatedActivity = await Activity.findByIdAndUpdate(id, {$set : fieldsToUpdate} , {new: true, runValidators: true});
                if (!updatedActivity) return res.status(404).json({message: "Activity not found"});

@@ -31,6 +31,14 @@ const activitySchema = new Schema({
      ngo: {
           type: Schema.Types.ObjectId,
           ref : 'NGO',
+     }, 
+     assignedWorkers: [{
+          type: Schema.Types.ObjectId,
+          ref: 'User'
+     }],
+     status: {
+          type: String,
+          default: 'Pending',
      }
 }, { timestamps: true });
 

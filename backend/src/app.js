@@ -3,8 +3,8 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import connectDB from './db/dbConnect.js';
-
-import activityRoutes from './Routes/activityRouter.js';
+import activityRouter from './routes/activityRouter.js';
+import submissionRoutes from "./Routes/submissionRoutes.js";
 import authRouter from './Routes/authRouter.js';
 
 dotenv.config();
@@ -24,6 +24,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
 app.use('/api/activity', activityRoutes);
+app.use('/api/submission', submissionRoutes);
 
 app.listen(process.env.PORT, () => {
      console.log(`server running on port ${process.env.PORT}`);

@@ -1,4 +1,4 @@
-import mongoose, {Schema, model} from 'mongoose';
+import {Schema, model} from 'mongoose';
 
 const activitySchema = new Schema({
      title: {
@@ -29,9 +29,9 @@ const activitySchema = new Schema({
           }
      }, 
      ngo: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref = 'NGO'
+          type: Schema.Types.ObjectId,
+          ref : 'NGO'
      }
-}, { timeStamps: true });
+}, { timestamps: true });
 
 export const Activity = model('Activity', activitySchema);

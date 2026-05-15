@@ -1,12 +1,12 @@
 import {Schema, model} from "mongoose";
 const submissionSchema = new Schema({
   activityId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "Activity",
   },
 
   fieldWorkerId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
   },
 
@@ -15,7 +15,7 @@ const submissionSchema = new Schema({
   },
 
   ngoId:{
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "NGO",
   }
   

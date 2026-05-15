@@ -1,7 +1,9 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+
 dotenv.config();
-export const verifyRole = (req, res, next) => {
+
+export const verifyToken = (req, res, next) => {
      try {
           const token = req.cookies.jwt;
           console.log(token);
@@ -19,8 +21,9 @@ export const verifyRole = (req, res, next) => {
      }
 }
 
-export const verifyAdminRole = (req,res,next) => {
-     try {
+export const verifyRole = (req,res,next) => {
+// export const verifyAdminRole = (req,res,next) => {
+try {
           const token = req.cookies.jwt;
           console.log(token);
           if (!token) return res.status(401).json({message: "Unauthorized, missing token"});

@@ -2,13 +2,19 @@ import express from 'express';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import connectDB from './db/dbConnect.js';
-import activityRouter from './routes/activityRouter.js';
+import activityRoutes from './routes/activityRouter.js';
 import submissionRoutes from "./Routes/submissionRoutes.js";
 import authRouter from './Routes/authRouter.js';
 
 dotenv.config();
 connectDB();
+
+const app = express();
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(cookieParser());
 
 app.use(cors({
   origin: ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:3000'],
@@ -16,11 +22,6 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
-
-const app = express();
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
 app.use('/api/activity', activityRoutes);

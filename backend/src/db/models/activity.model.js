@@ -1,5 +1,4 @@
 import {Schema, model} from 'mongoose';
-import {Schema, model} from 'mongoose';
 
 const activitySchema = new Schema({
      title: {

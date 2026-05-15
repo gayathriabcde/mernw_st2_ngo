@@ -6,7 +6,7 @@ const router = express.Router();
 //can also do
 //router.use(verifyToken); so as to not have to call verifyToken as middleware for every route
 
-router.get('/', verifyRole,getAllActivities);
+router.get('/', verifyToken ,getAllActivities);
 router.post('/', verifyToken, createActivity);
 router.patch('/:id', verifyToken, updateActivityFields);
 router.delete('/:id', verifyToken, deleteActivity);

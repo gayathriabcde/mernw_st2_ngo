@@ -32,8 +32,6 @@ const activitySchema = new Schema({
      ngo: {
           type: Schema.Types.ObjectId,
           ref : 'NGO',
-          type: Schema.Types.ObjectId,
-          ref : 'NGO'
      }
 }, { timestamps: true });
 

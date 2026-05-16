@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './db/dbConnect.js';
-import activityRoutes from './routes/activityRouter.js';
+import activityRoutes from './Routes/activityRouter.js';
 import submissionRoutes from "./Routes/submissionRoutes.js";
 import userRoutes from "./Routes/userRouter.js";
 import authRouter from './Routes/authRouter.js';

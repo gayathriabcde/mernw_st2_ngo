@@ -8,4 +8,4 @@ userRouter.get('/me', getUserDetails);
 userRouter.get('/all', verifyRole, getAllUsers);
 userRouter.patch('/all:id', verifyRole, updateUserRole);
 
-export default userRouter;
+export default userRouter;  

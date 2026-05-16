@@ -7,6 +7,7 @@ import { Activity } from './pages/Activity';
 import LoginPage from './pages/LoginPage';
 import { Dashboard } from './pages/Dashboard';
 import { Submission } from './pages/Submission';
+import { Navbar } from './components/Navbar.jsx';
 
 const ProtectedRoute = ({ children }) => {
   const isLoggedIn = useSelector(getIsLoggedIn);
@@ -15,7 +16,14 @@ const ProtectedRoute = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
 
-  return children;
+  return (
+    <>
+      <Navbar />
+      <main style={{ backgroundColor: "var(--mantine-color-gray-0)", minHeight: "calc(100vh - 70px)" }}>
+        {children}
+      </main>
+    </>
+  );
 }
 
 

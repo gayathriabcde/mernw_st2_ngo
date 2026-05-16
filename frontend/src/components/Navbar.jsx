@@ -79,16 +79,7 @@ export const Navbar = () => {
               </Menu.Target>
 
               <Menu.Dropdown>
-                <Menu.Label>Application</Menu.Label>
-                <Menu.Item leftSection={<IconLayoutDashboard size={14} />} onClick={() => navigate("/dashboard")}>
-                  Dashboard
-                </Menu.Item>
-                <Menu.Item leftSection={<IconActivity size={14} />} onClick={() => navigate("/activity")}>
-                  Activities
-                </Menu.Item>
-                
-                <Menu.Divider />
-                
+                <Menu.Label>Application</Menu.Label>                
                 <Menu.Item 
                   color="red" 
                   leftSection={<IconLogout size={14} />}

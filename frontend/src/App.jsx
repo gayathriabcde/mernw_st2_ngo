@@ -36,7 +36,6 @@ function App() {
         <Route path='/activity' element = {<ProtectedRoute> <Activity/> </ProtectedRoute>}/>
         <Route path='/submission' element = {<ProtectedRoute> <Submission/> </ProtectedRoute>}/>
         <Route path='/profile' element = {<ProtectedRoute> <Profile/> </ProtectedRoute>}/>
-        <Route path='/admin' element = {<ProtectedRoute> <AdminAccess/> </ProtectedRoute>}/>
       </Routes>
     </>
   )

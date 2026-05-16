@@ -37,9 +37,9 @@ export const createActivity = async (req, res) => {
 
           if (role === 'admin') {
                //const { title, description, activityType, location, beneficiary: {name: beneficiaryName, beneficiaryEmail, beneficiaryPhone}, ngo } = req.body;
-               const { title, description, activityType, location, beneficiary, ngo } = req.body;
+               const { title, description, activityType, location, beneficiary, ngo, assignedWorkers } = req.body;
                
-               const createdPost = await Activity.create({title, description, activityType, location, beneficiary, ngo})
+               const createdPost = await Activity.create({title, description, activityType, location, beneficiary, assignedWorkers, ngo})
                console.log(createdPost);
 
                if (!createdPost) return res.status(500).json({message: "Error idk."});
@@ -63,18 +63,24 @@ export const updateActivityFields = async (req, res) => { //title, description, 
 
           if (role === 'admin') {
                const { id } = req.params;
-               const { title, description, location, activityType, newWorkerId } = req.body; 
+               const { title, description, location, activityType, newWorkerId, status } = req.body; 
+          
+               const fieldsToUpdate = {};
+               const updateQuery = {};
 
-               const fieldsToUpdate = {$set: {}};
+               if (title != null) fieldsToUpdate.title = title;
+               if (description != null) fieldsToUpdate.description = description;
+               if (location != null) fieldsToUpdate.location = location;
+               if (activityType != null) fieldsToUpdate.activityType = activityType;
+               if (status != null) fieldsToUpdate.status = status;
 
-               if (title != null) fieldsToUpdate.$set.title = title;
-               if (description != null) fieldsToUpdate.$set.description = description;
-               if (location != null) fieldsToUpdate.$set.location = location;
-               if (activityType != null) fieldsToUpdate.$set.activityType = activityType;
+               if (Object.keys(fieldsToUpdate).length > 0) {
+                    updateQuery.$set = fieldsToUpdate;
+               }
 
-               if (newWorkerId != null) fieldsToUpdate.$addToSet = { assignedWorkers: newWorkerId };
+               if (newWorkerId != null) updateQuery.$addToSet = { assignedWorkers: newWorkerId };
 
-               const updatedActivity = await Activity.findByIdAndUpdate(id, {$set : fieldsToUpdate} , {new: true, runValidators: true});
+               const updatedActivity = await Activity.findByIdAndUpdate(id, updateQuery , {new: true, runValidators: true});
                if (!updatedActivity) return res.status(404).json({message: "Activity not found"});
 
                res.status(200).json({message: "Updated activity succesfully", data: updatedActivity});

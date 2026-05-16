@@ -13,10 +13,14 @@ export const getAllActivities = async (req, res) => {
                return res.status(200).json({
                     message: "Activities retrieved succesfully",
                     data: responseActivities
-               })
+               });
           } else {
                //res.status(403).json({ message: "Forbidden" });
                const responseActivities = await Activity.find({assignedWorkers: req.user.id});
+               return res.status(200).json({
+                    message: "Activities retrieved succesfully",
+                    data: responseActivities
+               });
           }
      } catch (error) {
           console.error(error.message);

@@ -1,4 +1,4 @@
-import User from "../db/models/user.model.js";
+import { User } from "../db/models/user.model.js";
 
 export const getUserDetails =async (req,res) => {
     try{
@@ -31,5 +31,20 @@ export const getAllUsers = async (req, res) => {
     } catch (error) {
         console.error(error.message);
         res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
+export const updateUserRole = async (req, res) => { //only role can be updated
+    try {
+        const { id } = req.params;
+        const { role } = req.body;
+
+        const updatedUser = await User.findByIdAndUpdate(id, {$set: {role: role}}, {new: true, runValidators: true});
+        if (!updatedUser) return res.status(404).json({message: "Not Found"});
+
+        res.status(200).json({message: "succesfully updated user role", data: updatedUser});
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({message: "some error , idek"});
     }
 }

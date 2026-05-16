@@ -53,6 +53,13 @@ export const Submission = () => {
 
   const [id, setId] = useState("");
 
+  const [
+  viewOpened,
+  { open: openView, close: closeView }
+] = useDisclosure(false);
+
+const [selectedSubmission, setSelectedSubmission] = useState(null);
+
   const service = new Service();
 
   const fetchActivity = async () => {
@@ -308,9 +315,16 @@ export const Submission = () => {
 
                   <Menu.Item
                     leftSection={<IconEye size={16} />}
-                  >
+                    onClick={() => {
+
+                        setSelectedSubmission(item);
+
+                        openView();
+
+                    }}
+                    >
                     View
-                  </Menu.Item>
+                    </Menu.Item>
 
                   <Menu.Item
                     leftSection={<IconEdit size={16} />}
@@ -419,6 +433,20 @@ export const Submission = () => {
             placeholder="Enter new submission"
           />
 
+          <TextInput
+            label="Proof Image URL"
+            placeholder="Paste image URL"
+            value={data.proofImage || ""}
+            onChange={(e) => {
+
+                setData({
+                ...data,
+                proofImage: e.target.value,
+                });
+
+            }}
+            />
+
           <Button
             mt="sm"
             onClick={addSubmission}
@@ -431,6 +459,44 @@ export const Submission = () => {
         </Stack>
 
       </Modal>
+
+      {/* VIEW MODAL */}
+        <Modal
+        opened={viewOpened}
+        onClose={closeView}
+        title="Submission Proof"
+        centered
+        radius="lg"
+        >
+            {console.log(selectedSubmission)}
+
+        <Stack>
+
+            <Text fw={600}>
+            {selectedSubmission?.activityId?.title}
+            </Text>
+
+            <Text size="sm">
+            {selectedSubmission?.data}
+            </Text>
+
+            {selectedSubmission?.proofImage && (
+                
+            <img
+                src={selectedSubmission.proofImage}
+                alt="Proof"
+                style={{
+                width: "100%",
+                borderRadius: "12px",
+                objectFit: "cover",
+                }}
+            />
+
+            )}
+
+        </Stack>
+
+        </Modal>
 
     </Container>
   );

@@ -58,11 +58,12 @@ export const getAllSubmissions = async (req, res) => {
 export const createSubmission = async (req, res) => {
   try {
 
-    const { activityId, data } = req.body;
+    const { activityId, data, proofImage } = req.body;
 
     const newSubmission = await Submission.create({
       activityId,
       data,
+      proofImage,
 
       fieldWorkerId: req.user.id,
     });
@@ -85,8 +86,8 @@ export const createSubmission = async (req, res) => {
 export const updateSubmission = async (req, res) => {
     try{
         const {id} = req.params;
-        const {data} = req.body;
-        const submission = await Submission.findByIdAndUpdate(id, { data }, { new: true });
+        const {data, proofImage} = req.body;
+        const submission = await Submission.findByIdAndUpdate(id, { data, proofImage }, { new: true });
         if (!submission) {
             return res.status(404).json({
                 message: "Submission not found"

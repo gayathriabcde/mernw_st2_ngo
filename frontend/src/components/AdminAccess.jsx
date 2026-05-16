@@ -30,7 +30,6 @@ export const AdminAccess = () => {
 
   const service = new Service();
 
-  // FETCH USERS
   const fetchUsers = async () => {
 
     try {
@@ -51,7 +50,6 @@ export const AdminAccess = () => {
     }
   };
 
-  // UPDATE ROLE
   const updateRole = async (id) => {
 
     try {
@@ -86,7 +84,6 @@ export const AdminAccess = () => {
 
   }, []);
 
-  // LOADING
   if (loading) {
 
     return (

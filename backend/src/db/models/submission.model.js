@@ -13,6 +13,10 @@ const submissionSchema = new Schema({
   data: {
     type: String,
   },
+  
+  proofImage: {
+    type: String,
+  },
 
   ngoId:{
     type: Schema.Types.ObjectId,

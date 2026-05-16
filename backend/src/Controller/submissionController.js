@@ -1,5 +1,5 @@
 import { Submission } from "../db/models/submission.model.js";
-
+import { User } from "../db/models/user.model.js";
 export const getAllSubmissions = async (req, res) => {
   try {
 
@@ -28,9 +28,11 @@ export const getAllSubmissions = async (req, res) => {
       const responseSubmissions = await Submission.find({
         fieldWorkerId: id,
       })
-        // .populate("activityId")
-        // .populate("fieldWorkerId");
-
+        .populate("activityId")
+        .populate("fieldWorkerId");
+      
+      console.log(responseSubmissions);
+      console.log(id);
       return res.status(200).json({
         message: "User submissions retrieved successfully",
         data: responseSubmissions,

@@ -13,9 +13,9 @@ export const verifyToken = async (req, res, next) => {
           if (!token) return res.status(401).json({message: "Unauthorized, missing token"});
 
           const user = jwt.verify(token, process.env.JWT_SECRET); 
-
+          console.log(user.role);
           const userUpdated = await User.findById(user.id);
-          console.log(user);
+          console.log(userUpdated);
           req.user = userUpdated;
           next();
      } catch (error) {

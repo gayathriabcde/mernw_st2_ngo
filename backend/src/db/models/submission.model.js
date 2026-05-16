@@ -7,7 +7,7 @@ const submissionSchema = new Schema({
 
   fieldWorkerId: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "user",
   },
 
   data: {
@@ -16,7 +16,7 @@ const submissionSchema = new Schema({
 
   ngoId:{
     type: Schema.Types.ObjectId,
-    ref: "NGO",
+    ref: "ngo",
   }
   
 }, { timestamps: true });

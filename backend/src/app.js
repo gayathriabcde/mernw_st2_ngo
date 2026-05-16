@@ -12,14 +12,17 @@ import authRouter from './Routes/authRouter.js';
 dotenv.config();
 connectDB();
 
+const app = express();
+
+
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:3000', 'https://acdcfrontend.onrender.com'],
+  origin: ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:3000', /**'https://acdcfrontend.onrender.com' **/],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-const app = express();
+
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());

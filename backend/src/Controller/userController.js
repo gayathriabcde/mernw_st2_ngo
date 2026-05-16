@@ -16,9 +16,18 @@ export const getUserDetails =async (req,res) => {
 
 export const getAllUsers = async (req, res) => {
     try {
-        const users = await User.find({});
-        console.log(users);
-        res.status(200).json(users);
+        /** console.log("user role", req.body.role);
+        const { role } = req.body;
+
+        if (role === 'admin') { **/
+            const users = await User.find({});
+            console.log(users);
+
+            if (!users || user.length === 0) return res.status(404).json({message: "Not Found"});
+            res.status(200).json({message: "Succesfully retrieved users", data: users});
+        /**} else {
+            res.status(403).json({message: "Forbidden"});
+        } **/
     } catch (error) {
         console.error(error.message);
         res.status(500).json({ message: "Internal Server Error" });

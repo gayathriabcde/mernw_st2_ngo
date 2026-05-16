@@ -6,18 +6,15 @@ function joinURL(baseURL, url) {
 
 class Service {
   constructor() {
-    this.domain = "";
-    if (import.meta.env.VITE_BZENV === "development") {
-      this.domain = import.meta.env.VITE_DEV_PROXY;
-    }
+    this.domain = import.meta.env.VITE_API_URL || import.meta.env.VITE_DEV_PROXY || "http://localhost:3000";
   }
 
   async request(url, method = "POST", data) {
-    url = joinURL(this.domain, "api/" + url);
-    console.log(url);
+    const fullUrl = joinURL(this.domain, "api/" + url);
+    console.log("Fetching from:", fullUrl);
 
     const res = await axios.request({
-      url,
+      url: fullUrl,
       method,
       data,
       withCredentials: true,

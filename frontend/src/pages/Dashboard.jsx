@@ -224,9 +224,10 @@ export const Dashboard = () => {
               <Text size="sm" c="dimmed">No submissions found yet.</Text>
             ) : (
               recentSubmissions.map((sub) => (
-                <Group key={sub._id} justify="space-between" align="flex-start" wrap="nowrap">
+                <Group key={sub._id} justify="space-between" align="center" wrap="nowrap">
                   <Group wrap="nowrap">
                     <ThemeIcon 
+                      // Using your model's lowercase status or defaulting to pending color
                       color={sub.status === "Approved" ? "green" : "orange"} 
                       variant="light" 
                       size="lg" 
@@ -237,10 +238,12 @@ export const Dashboard = () => {
                     
                     <div>
                       <Text size="sm" fw={600} lineClamp={1}>
-                        {sub.activityId?.title || "Submission Data"}
+                        {/* FIXED: Fallback to the actual submission data field if title isn't populated */}
+                        {sub.activityId?.title || sub.data || "Field Report"}
                       </Text>
                       <Text size="xs" c="dimmed">
-                        By {sub.fieldWorkerId?.name || "Unknown Worker"}
+                        {/* FIXED: Fallback graceful description if worker object isn't populated */}
+                        {sub.fieldWorkerId?.name ? `By ${sub.fieldWorkerId.name}` : `Status: ${sub.status || 'Pending'}`}
                       </Text>
                     </div>
                   </Group>

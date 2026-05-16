@@ -26,8 +26,7 @@ export default function LoginPage() {
         return;
       }
 
-      const response = await service.post('auth/google', { token });
-      const data = response.data;
+      const data = await service.post('auth/google', { token });
 
       dispatch(
         setUser({
@@ -86,7 +85,7 @@ export default function LoginPage() {
           <Text c="white" my="sm" size="lg">
             Login to{" "}
             <Text component="span" fw={700} c="white">
-              Being Zero 
+              FieldSync 
             </Text>
           </Text>
           <Stack align="center" spacing="lg">

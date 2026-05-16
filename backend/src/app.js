@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './db/dbConnect.js';
-import activityRoutes from './routes/activityRouter.js';
+import activityRoutes from './Routes/activityRouter.js';
 import submissionRoutes from "./Routes/submissionRoutes.js";
 import userRoutes from "./Routes/userRouter.js";
 import authRouter from './Routes/authRouter.js';
@@ -12,17 +12,18 @@ import authRouter from './Routes/authRouter.js';
 dotenv.config();
 connectDB();
 
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:3000', 'https://acdcfrontend.onrender.com'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
 const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors({
-  origin: ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:3000'],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
 
 app.use("/api/auth", authRouter);
 app.use('/api/activity', activityRoutes);

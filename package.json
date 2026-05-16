@@ -1,5 +1,16 @@
 {
+  "name": "mernw_st2_ngo",
+  "version": "1.0.0",
+  "scripts": {
+    "server": "cd backend && npm run dev",
+    "client": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+  },
   "dependencies": {
     "mongoose": "^9.6.2"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }

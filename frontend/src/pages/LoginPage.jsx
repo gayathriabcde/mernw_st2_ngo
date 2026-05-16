@@ -26,8 +26,7 @@ export default function LoginPage() {
         return;
       }
 
-      const response = await service.post('auth/google', { token });
-      const data = response.data;
+      const data = await service.post('auth/google', { token });
 
       dispatch(
         setUser({

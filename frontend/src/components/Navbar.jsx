@@ -29,7 +29,7 @@ export const Navbar = () => {
       <Container size="xl" h={70}>
         <Group justify="space-between" h="100%">
           
-          <Group style={{ cursor: "pointer" }} onClick={() => navigate("/dashboard")}>
+          <Group style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
             <ThemeIcon color="green" size="lg" radius="md" variant="light">
               <IconLeaf size={22} />
             </ThemeIcon>

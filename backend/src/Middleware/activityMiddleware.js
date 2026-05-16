@@ -27,6 +27,7 @@ export const verifyToken = async (req, res, next) => {
 export const verifyRole = (req,res,next) => {
 // export const verifyAdminRole = (req,res,next) => {
 try {
+          console.log("HERE");
           const token = req.cookies.jwt;
           console.log(token);
           if (!token) return res.status(401).json({message: "Unauthorized, missing token"});
@@ -37,6 +38,7 @@ try {
                return res.status(403).json({message: "Access denied, admin role required"});
           }
           req.user = user;
+          console.log(req.user.id);
           next();
      } catch (error) {
           console.error(error.message);

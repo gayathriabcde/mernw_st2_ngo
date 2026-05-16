@@ -23,7 +23,7 @@ export const getAllUsers = async (req, res) => {
             const users = await User.find({});
             console.log(users);
 
-            if (!users || user.length === 0) return res.status(404).json({message: "Not Found"});
+            if (!users || users.length === 0) return res.status(404).json({message: "Not Found"});
             res.status(200).json({message: "Succesfully retrieved users", data: users});
         /**} else {
             res.status(403).json({message: "Forbidden"});
@@ -38,8 +38,11 @@ export const updateUserRole = async (req, res) => { //only role can be updated
     try {
         const { id } = req.params;
         const { role } = req.body;
-
+        console.log("id", id);
+        console.log("role", role);
+        if (role !== "admin" && role !== "field-worker") return res.status(400).json({message: "Bad Request, invalid role value"});
         const updatedUser = await User.findByIdAndUpdate(id, {$set: {role: role}}, {new: true, runValidators: true});
+        console.log("updated user", updatedUser);
         if (!updatedUser) return res.status(404).json({message: "Not Found"});
 
         res.status(200).json({message: "succesfully updated user role", data: updatedUser});

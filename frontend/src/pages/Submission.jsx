@@ -12,6 +12,7 @@ import {
   Button,
   TextInput,
   Menu,
+  Select
 } from "@mantine/core";
 
 import { useDisclosure } from "@mantine/hooks";
@@ -23,6 +24,7 @@ import {
   IconDotsVertical,
   IconEdit,
   IconTrash,
+  IconPlus,
 } from "@tabler/icons-react";
 
 import Service from "../utils/http.js";
@@ -30,14 +32,41 @@ import Service from "../utils/http.js";
 export const Submission = () => {
 
   const [submission, setSubmission] = useState([]);
-
+  const[activity, setActivity] = useState([]);
   const [opened, { open, close }] = useDisclosure(false);
 
+  const [
+    addOpened,
+    { open: openAdd, close: closeAdd }
+  ] = useDisclosure(false);
+
   const [updatedData, setUpdatedData] = useState({});
+
+  const [data, setData] = useState({
+    data: "",
+  });
 
   const [id, setId] = useState("");
 
   const service = new Service();
+
+  const fetchActivity = async () => {
+    try{
+        const res = await service.get("activity");
+        console.log(res.data);
+        setActivity(res.data);
+    } catch (error) {
+        console.error("Error fetching activity:", error);
+    }
+  };
+
+    useEffect(() => {
+        fetchActivity();
+    }, []);
+
+     useEffect(() => {
+        console.log("activity :", activity);
+     }, [activity]);
 
   // FETCH SUBMISSIONS
   const fetchSubmission = async () => {
@@ -107,9 +136,44 @@ export const Submission = () => {
     }
   };
 
+  // ADD SUBMISSION
+  const addSubmission = async () => {
+
+    try {
+
+      await service.post("submission", data);
+
+      closeAdd();
+
+      fetchSubmission();
+
+      setData({
+        data: "",
+      });
+
+    } catch (error) {
+
+      console.error("Error adding submission:", error);
+    }
+  };
+
   return (
 
     <Stack gap="md">
+
+      <div>
+
+        <Button
+          onClick={openAdd}
+          leftSection={<IconPlus size={18} />}
+          color="green"
+          radius="md"
+          size="md"
+        >
+          Add Submission
+        </Button>
+
+      </div>
 
       {submission.map((item, index) => (
 
@@ -266,6 +330,47 @@ export const Submission = () => {
           onClick={updateRecord}
         >
           Update
+        </Button>
+
+      </Modal>
+
+      {/* ADD MODAL */}
+      <Modal
+        opened={addOpened}
+        onClose={closeAdd}
+        title="Add Submission"
+      >
+
+            <Select
+            label="Your Activity"
+            placeholder="Pick Activity"
+            data={activity.map((act) => ({
+                value: act._id,
+                label: act.title,}))}
+            onChange={(value) => setData({
+                ...data,
+                activityId: value,
+            })}
+           /> 
+        <TextInput
+          label="Enter submission data"
+          value={data.data}
+          onChange={(e) => {
+
+            setData({
+              ...data,
+              data: e.target.value,
+            });
+
+          }}
+          placeholder="Enter new submission"
+        />
+
+        <Button
+          mt="md"
+          onClick={addSubmission}
+        >
+          Add
         </Button>
 
       </Modal>

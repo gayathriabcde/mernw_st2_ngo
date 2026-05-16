@@ -1,21 +1,15 @@
-import {
-  Card,
-  Center,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { Card, Center, Stack, Text } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { GoogleLogin } from "@react-oauth/google";
 import { showNotification } from "@mantine/notifications";
-import Service from "../../utils/http";
-import { GOOGLE_AUTH_LOGIN } from "../../utils/urls";
+import Service from "../utils/http";
 import { useDispatch, useSelector } from "react-redux";
-import { getIsLoggedIn, setUser } from "../../redux/slices/User";
+import { getIsLoggedIn, setUser } from "../redux/slice/User.js";
 import { Navigate, useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const service = new Service();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(getIsLoggedIn);
 
@@ -32,7 +26,7 @@ export default function LoginPage() {
         return;
       }
 
-      const response = await service.post(GOOGLE_AUTH_LOGIN, { token });
+      const response = await service.post('auth/google', { token });
       const data = response.data;
 
       dispatch(
@@ -46,7 +40,7 @@ export default function LoginPage() {
       );
       showNotification({
         title: "Success",
-        message: "Welcome! Login Successfully.",
+        message: "Welcome! Login Successful.",
         color: "green",
       });
       navigate("/");

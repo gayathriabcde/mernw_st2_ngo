@@ -1,9 +1,11 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
+import { User } from '../db/models/user.model.js';
+
 dotenv.config();
 
-export const verifyToken = (req, res, next) => {
+export const verifyToken = async (req, res, next) => {
      try {
           const token = req.cookies.jwt;
           console.log(token);
@@ -12,8 +14,9 @@ export const verifyToken = (req, res, next) => {
 
           const user = jwt.verify(token, process.env.JWT_SECRET); 
 
+          const userUpdated = await User.findById(user.id);
           console.log(user);
-          req.user = user;
+          req.user = userUpdated;
           next();
      } catch (error) {
           console.error(error.message);

@@ -12,7 +12,10 @@ import {
   Button,
   TextInput,
   Menu,
-  Select
+  Select,
+  Container,
+  Card,
+  Divider,
 } from "@mantine/core";
 
 import { useDisclosure } from "@mantine/hooks";
@@ -32,7 +35,9 @@ import Service from "../utils/http.js";
 export const Submission = () => {
 
   const [submission, setSubmission] = useState([]);
-  const[activity, setActivity] = useState([]);
+
+  const [activity, setActivity] = useState([]);
+
   const [opened, { open, close }] = useDisclosure(false);
 
   const [
@@ -51,25 +56,36 @@ export const Submission = () => {
   const service = new Service();
 
   const fetchActivity = async () => {
-    try{
-        const res = await service.get("activity");
-        console.log(res.data);
-        setActivity(res.data);
+
+    try {
+
+      const res = await service.get("activity");
+
+      console.log(res.data);
+
+      setActivity(res.data);
+
     } catch (error) {
-        console.error("Error fetching activity:", error);
+
+      console.error("Error fetching activity:", error);
     }
   };
 
-    useEffect(() => {
-        fetchActivity();
-    }, []);
+  useEffect(() => {
 
-     useEffect(() => {
-        console.log("activity :", activity);
-     }, [activity]);
+    fetchActivity();
+
+  }, []);
+
+  useEffect(() => {
+
+    console.log("activity :", activity);
+
+  }, [activity]);
 
   // FETCH SUBMISSIONS
   const fetchSubmission = async () => {
+
     try {
 
       const res = await service.get("submission");
@@ -84,7 +100,9 @@ export const Submission = () => {
 
   // FETCH ON PAGE LOAD
   useEffect(() => {
+
     fetchSubmission();
+
   }, []);
 
   // UPDATE HANDLER
@@ -159,112 +177,127 @@ export const Submission = () => {
 
   return (
 
-    <Stack gap="md">
+    <Container size="lg" py="xl">
 
-      <div>
+      <Stack gap="lg">
 
-        <Button
-          onClick={openAdd}
-          leftSection={<IconPlus size={18} />}
-          color="green"
-          radius="md"
-          size="md"
-        >
-          Add Submission
-        </Button>
+        {/* TOP BAR */}
+        <Group justify="space-between">
 
-      </div>
+          <Stack gap={0}>
 
-      {submission.map((item, index) => (
+            <Text fw={700} size="xl">
+              Submissions
+            </Text>
 
-        <Paper
-          key={index}
-          p="md"
-          radius="lg"
-          withBorder
-        >
+            <Text c="dimmed" size="sm">
+              Manage all NGO field submissions
+            </Text>
 
-          <Group justify="space-between" align="center">
+          </Stack>
 
-            {/* LEFT SECTION */}
-            <Group>
+          <Button
+            onClick={openAdd}
+            leftSection={<IconPlus size={18} />}
+            color="green"
+            radius="md"
+            size="md"
+          >
+            Add Submission
+          </Button>
 
-              <ThemeIcon
-                size={52}
-                radius="md"
-                color="green"
-                variant="light"
-              >
+        </Group>
 
-                {item.activityId?.activityType === "Water" ? (
+        <Divider />
 
-                  <IconDroplet size={24} />
+        {/* SUBMISSION CARDS */}
+        {submission.map((item, index) => (
 
-                ) : (
+          <Card
+            key={index}
+            shadow="sm"
+            radius="xl"
+            padding="lg"
+            withBorder
+          >
 
-                  <IconLeaf size={24} />
+            <Group
+              justify="space-between"
+              align="flex-start"
+            >
 
-                )}
+              {/* LEFT SECTION */}
+              <Group align="flex-start">
 
-              </ThemeIcon>
-
-              <Stack gap={2}>
-
-                <Text fw={700} size="lg">
-                  {item.activityId?.title}
-                </Text>
-
-                <Text size="sm" c="dimmed">
-                  Submitted by: {item.fieldWorkerId?.name}
-                </Text>
-
-                <Text size="sm">
-                  {item.data}
-                </Text>
-
-              </Stack>
-
-            </Group>
-
-            {/* RIGHT SECTION */}
-            <Group gap="xl">
-
-              <Stack gap={2} align="flex-start">
-
-                <Text size="xs" fw={700} c="dimmed">
-                  DATE
-                </Text>
-
-                <Text>
-                  {new Date(item.createdAt).toLocaleDateString()}
-                </Text>
-
-              </Stack>
-
-              <Stack gap={2} align="flex-start">
-
-                <Text size="xs" fw={700} c="dimmed">
-                  TYPE
-                </Text>
-
-                <Badge
+                <ThemeIcon
+                  size={60}
+                  radius="xl"
                   color="green"
                   variant="light"
-                  radius="xl"
                 >
-                  {item.activityId?.activityType}
-                </Badge>
 
-              </Stack>
+                  {item.activityId?.activityType === "Water" ? (
 
-              {/* MENU */}
-              <Menu shadow="md" width={160}>
+                    <IconDroplet size={28} />
+
+                  ) : (
+
+                    <IconLeaf size={28} />
+
+                  )}
+
+                </ThemeIcon>
+
+                <Stack gap={4}>
+
+                  <Text fw={700} size="lg">
+                    {item.activityId?.title}
+                  </Text>
+
+                  <Text size="sm" c="dimmed">
+                    Submitted by{" "}
+                    {item.fieldWorkerId?.name}
+                  </Text>
+
+                  <Text size="sm">
+                    {item.data}
+                  </Text>
+
+                  <Group mt="xs">
+
+                    <Badge
+                      color="green"
+                      variant="light"
+                      radius="xl"
+                    >
+                      {item.activityId?.activityType}
+                    </Badge>
+
+                    <Badge
+                      color="blue"
+                      variant="light"
+                      radius="xl"
+                    >
+                      {new Date(
+                        item.createdAt
+                      ).toLocaleDateString()}
+                    </Badge>
+
+                  </Group>
+
+                </Stack>
+
+              </Group>
+
+              {/* RIGHT SECTION */}
+              <Menu shadow="md" width={170}>
 
                 <Menu.Target>
 
                   <ActionIcon
                     variant="subtle"
                     color="gray"
+                    size="lg"
                   >
                     <IconDotsVertical size={18} />
                   </ActionIcon>
@@ -300,37 +333,47 @@ export const Submission = () => {
 
             </Group>
 
-          </Group>
+          </Card>
 
-        </Paper>
+        ))}
 
-      ))}
+      </Stack>
 
       {/* UPDATE MODAL */}
       <Modal
         opened={opened}
         onClose={close}
         title="Edit Submission"
+        centered
+        radius="lg"
       >
 
-        <TextInput
-          value={updatedData.data || ""}
-          label="Enter new data"
-          onChange={(e) => {
-            setUpdatedData({
-              ...updatedData,
-              data: e.target.value,
-            });
-          }}
-          placeholder="Enter updated submission"
-        />
+        <Stack>
 
-        <Button
-          mt="md"
-          onClick={updateRecord}
-        >
-          Update
-        </Button>
+          <TextInput
+            value={updatedData.data || ""}
+            label="Enter new data"
+            onChange={(e) => {
+
+              setUpdatedData({
+                ...updatedData,
+                data: e.target.value,
+              });
+
+            }}
+            placeholder="Enter updated submission"
+          />
+
+          <Button
+            mt="sm"
+            onClick={updateRecord}
+            color="green"
+            radius="md"
+          >
+            Update
+          </Button>
+
+        </Stack>
 
       </Modal>
 
@@ -339,42 +382,56 @@ export const Submission = () => {
         opened={addOpened}
         onClose={closeAdd}
         title="Add Submission"
+        centered
+        radius="lg"
       >
 
-            <Select
+        <Stack>
+
+          <Select
             label="Your Activity"
             placeholder="Pick Activity"
+            searchable
+            nothingFoundMessage="No activities found"
             data={activity.map((act) => ({
-                value: act._id,
-                label: act.title,}))}
-            onChange={(value) => setData({
+              value: act._id,
+              label: act.title,
+            }))}
+            onChange={(value) =>
+              setData({
                 ...data,
                 activityId: value,
-            })}
-           /> 
-        <TextInput
-          label="Enter submission data"
-          value={data.data}
-          onChange={(e) => {
+              })
+            }
+          />
 
-            setData({
-              ...data,
-              data: e.target.value,
-            });
+          <TextInput
+            label="Enter submission data"
+            value={data.data}
+            onChange={(e) => {
 
-          }}
-          placeholder="Enter new submission"
-        />
+              setData({
+                ...data,
+                data: e.target.value,
+              });
 
-        <Button
-          mt="md"
-          onClick={addSubmission}
-        >
-          Add
-        </Button>
+            }}
+            placeholder="Enter new submission"
+          />
+
+          <Button
+            mt="sm"
+            onClick={addSubmission}
+            color="green"
+            radius="md"
+          >
+            Add Submission
+          </Button>
+
+        </Stack>
 
       </Modal>
 
-    </Stack>
+    </Container>
   );
 };

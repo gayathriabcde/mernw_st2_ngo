@@ -14,6 +14,7 @@ class Service {
 
   async request(url, method = "POST", data) {
     url = joinURL(this.domain, "api/" + url);
+    console.log(url);
 
     const res = await axios.request({
       url,

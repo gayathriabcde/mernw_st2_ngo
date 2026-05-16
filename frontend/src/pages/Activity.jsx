@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Service from "../utils/http";
 import {
   Title,
@@ -15,9 +15,14 @@ import {
 } from "@mantine/core";
 
 import { IconPlus, IconSearch } from "@tabler/icons-react";
+import { useDisclosure } from "@mantine/hooks";
 export const Activity = () => {
     const[activities, setActivities] = useState([]);
+    const[ updatedActivity, setUpdatedActivity ] = useState({});
+
+    const [ opened, {open, close}] = useDisclosure(false);
     const[search, setSearch] = useState("");
+
     const service = new Service();
     const fetchActivities= async()=>{
         try{
@@ -28,7 +33,7 @@ export const Activity = () => {
         }
     };
 
-    useState(() => {
+    useEffect(() => {
         fetchActivities();
     }, []);
 

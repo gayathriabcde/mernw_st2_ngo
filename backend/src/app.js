@@ -6,6 +6,7 @@ import cors from 'cors';
 import connectDB from './db/dbConnect.js';
 import activityRoutes from './routes/activityRouter.js';
 import submissionRoutes from "./Routes/submissionRoutes.js";
+import userRoutes from "./Routes/userRouter.js";
 import authRouter from './Routes/authRouter.js';
 
 dotenv.config();
@@ -26,6 +27,7 @@ app.use(cors({
 app.use("/api/auth", authRouter);
 app.use('/api/activity', activityRoutes);
 app.use('/api/submission', submissionRoutes);
+app.use('/api/user', userRoutes);
 
 app.listen(process.env.PORT, () => {
      console.log(`server running on port ${process.env.PORT}`);

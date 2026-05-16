@@ -7,13 +7,13 @@ import {
   deleteSubmission
 } from "../Controller/submissionController.js";
 
-import { verifyRole } from "../Middleware/activityMiddleware.js";
+import { verifyRole, verifyToken } from "../Middleware/activityMiddleware.js";
 
 const router = express.Router();
 
-router.get("/", getAllSubmissions);
-router.post("/", createSubmission);
-router.patch("/:id", updateSubmission);
-router.delete("/:id", deleteSubmission);
+router.get("/", verifyToken, getAllSubmissions);
+router.post("/", verifyToken, createSubmission);
+router.patch("/:id", verifyToken, updateSubmission);
+router.delete("/:id", verifyToken, deleteSubmission);
 
 export default router;
